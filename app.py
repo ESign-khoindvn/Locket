@@ -271,16 +271,15 @@ def index():
 
 @app.route("/api/get-user-info", methods=["POST"])
 def get_user_info():
+    global api # Thêm dòng này để cập nhật biến toàn cục
     if not api:
-        return jsonify(
-            {"success": False, "msg": "API not initialized. Check server logs."}
-        ), 500
+        # Thử khởi tạo lại nếu api đang None
+        try:
+            token = auth.get_token()
+            api = LocketAPI(token)
+        except:
+            return jsonify({"success": False, "msg": "API vẫn chưa thể khởi tạo. Kiểm tra thông tin đăng nhập."}), 500
 
-    data = request.json
-    username = data.get("username")
-
-    if not username:
-        return jsonify({"success": False, "msg": "Username is required"}), 400
 
     try:
         # User lookup
