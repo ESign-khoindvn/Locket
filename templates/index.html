@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locket Gold Unlocker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #FFD700 0%, #FDB931 100%);
+            --bg-color: #0f0f0f;
+            --card-bg: rgba(30, 30, 30, 0.6);
+            --text-color: #ffffff;
+            --text-secondary: #a0a0a0;
+            --input-bg: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            background-image:
+                radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
+                radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 1) 0, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 1) 0, transparent 50%);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .main-wrapper {
+            width: 100%;
+            max-width: 480px;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .container {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            border: var(--glass-border);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        h1 {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        p.subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+            position: relative;
+            z-index: 1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.75rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--input-bg);
+            border: var(--glass-border);
+            border-radius: 0.75rem;
+            color: var(--text-color);
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #FFD700;
+            background-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.1);
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-gradient);
+            color: #000;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(253, 185, 49, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Instructions Card */
+        .instructions {
+            background: rgba(20, 20, 20, 0.4);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: var(--glass-border);
+            text-align: left;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .instructions h3 {
+            color: #fff;
+            font-size: 1rem;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .instructions ol {
+            padding-left: 1.2rem;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .instructions li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Note Card */
+        .note {
+            background: rgba(255, 215, 0, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: left;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 0px;
+            /* Spacing handled by gap in main-wrapper */
+        }
+
+        .note h3 {
+            color: #FFD700;
+            font-size: 1rem;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .note ul {
+            padding-left: 1.2rem;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .note li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            padding: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            text-align: center;
+            width: 100%;
+        }
+
+        footer a {
+            color: #FFD700;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        footer a:hover {
+            opacity: 0.8;
+        }
+
+        /* Loader */
+        .loader {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            border-top-color: #000;
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Customize SweetAlert2 to match glassmorphism */
+        div:where(.swal2-container) div:where(.swal2-popup) {
+            background: rgba(30, 30, 30, 0.8) !important;
+            backdrop-filter: blur(16px) !important;
+            -webkit-backdrop-filter: blur(16px) !important;
+            border: var(--glass-border) !important;
+            border-radius: 1.5rem !important;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+        }
+
+        div:where(.swal2-container) h2:where(.swal2-title) {
+            color: #fff !important;
+            font-family: 'Outfit', sans-serif !important;
+        }
+
+        div:where(.swal2-container) .swal2-html-container {
+            font-family: 'Outfit', sans-serif !important;
+            color: var(--text-secondary) !important;
+        }
+
+        /* User Info Card Styles */
+        .swal2-html-container .user-info-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: left;
+        }
+
+        .swal2-html-container .user-info-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .swal2-html-container .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #FFD700;
+        }
+
+        .swal2-html-container .user-details {
+            flex: 1;
+        }
+
+        .swal2-html-container .user-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.25rem;
+        }
+
+        .swal2-html-container .user-username {
+            font-size: 0.9rem;
+            color: #a0a0a0;
+        }
+
+        .swal2-html-container .user-uid {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.5rem;
+            word-break: break-all;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        /* Custom Buttons for Swal */
+        .glass-confirm-btn {
+            background: var(--primary-gradient) !important;
+            color: #000 !important;
+            font-weight: 700 !important;
+            border-radius: 0.75rem !important;
+            padding: 12px 24px !important;
+            border: none !important;
+            box-shadow: none !important;
+            font-family: 'Outfit', sans-serif !important;
+        }
+
+        .glass-cancel-btn {
+            background: rgba(255, 255, 255, 0.1) !important;
+            color: #fff !important;
+            border-radius: 0.75rem !important;
+            padding: 12px 24px !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            font-family: 'Outfit', sans-serif !important;
+            margin-top: 12px !important;
+            /* Spacing between buttons */
+        }
+
+        /* Queue Status Styles */
+        .queue-status-container {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .queue-position {
+            font-size: 3rem;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 1rem 0;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .queue-info {
+            display: flex;
+            justify-content: space-around;
+            margin: 1.5rem 0;
+            gap: 1rem;
+        }
+
+        .queue-stat {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .queue-stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .queue-stat-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #FFD700;
+        }
+
+        .queue-progress {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+
+        .queue-progress-bar {
+            height: 100%;
+            background: var(--primary-gradient);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            animation: shimmer 2s infinite;
+        }
+
+        .queue-status-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main-wrapper">
+        <div class="container">
+            <h1>Locket Gold</h1>
+            <p class="subtitle">Unlock premium features instantly</p>
+
+            <div class="form-group">
+                <label for="username">Target Username</label>
+                <input type="text" id="username" placeholder="Enter Locket username..." required autocomplete="off">
+            </div>
+
+            <button id="submitBtn" onclick="checkUserInfo()">
+                <span class="btn-text">Check User Info</span>
+                <div class="loader" id="loader"></div>
+            </button>
+        </div>
+
+        <div class="instructions">
+            <h3>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                How to use
+            </h3>
+            <ol>
+                <li>Open the Locket app and find your username in settings.</li>
+                <li>Enter your exact username in the field above.</li>
+                <li>Click <strong>Check User Info</strong> to verify the account.</li>
+                <li>Review the information and click <strong>Continue</strong> to unlock Gold.</li>
+                <li><strong>Important:</strong> After activation, you must install the configuration profile below to
+                    block revocation.</li>
+                <li>Restart your Locket app to see the changes.</li>
+            </ol>
+            <div style="margin-top: 1rem; text-align: center;">
+                <a href="/static/locket.mobileconfig" class="download-btn" target="_blank" style="
+                    display: inline-block;
+                    background: rgba(255, 255, 255, 0.1);
+                    color: #fff;
+                    padding: 0.8rem 1.5rem;
+                    border-radius: 0.75rem;
+                    text-decoration: none;
+                    font-weight: 600;
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                    transition: all 0.3s ease;
+                ">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        style="vertical-align: middle; margin-right: 8px;">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Download Configuration Profile
+                </a>
+            </div>
+        </div>
+
+        <div class="note">
+            <h3>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                    </path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                Important Note
+            </h3>
+            <ul>
+                <li>This tool is compatible with <strong>iOS Devices Only</strong>.</li>
+                <li>The Gold subscription is only valid until you <strong>log out</strong> of the Locket app.</li>
+                <li>This project is created for <strong>educational purposes only</strong>.</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>Created with ❤️ by <a href="https://maihuybao.dev" target="_blank">Mai Huy Bao</a></p>
+        <p style="margin-top: 5px; font-size: 0.8rem;">
+            <a href="https://github.com/maihuybao/LocketGoldUnlockerWithUsername" target="_blank" style="opacity: 0.7;">
+                Open Source on GitHub
+            </a>
+        </p>
+    </footer>
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        let currentUserData = null;
+
+        const swalGlassParams = {
+            background: 'transparent', // Handled by CSS
+            customClass: {
+                popup: 'glass-popup',
+                confirmButton: 'glass-confirm-btn',
+                cancelButton: 'glass-cancel-btn'
+            },
+            buttonsStyling: false
+        };
+
+        async function checkUserInfo() {
+            const usernameInput = document.getElementById('username');
+            const username = usernameInput.value.trim();
+            const btn = document.getElementById('submitBtn');
+            const loader = document.getElementById('loader');
+            const btnText = document.querySelector('.btn-text');
+
+            if (!username) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Missing Input',
+                    text: 'Please enter a valid Locket username!',
+                    ...swalGlassParams,
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+
+            // Loading state
+            btn.disabled = true;
+            loader.style.display = 'block';
+            btnText.style.display = 'none';
+
+            try {
+                const response = await fetch('/api/get-user-info', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username: username }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    currentUserData = data.data;
+                    showUserInfoConfirmation(data.data);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'User Not Found',
+                        text: data.msg || "Could not find user with this username",
+                        ...swalGlassParams,
+                        confirmButtonColor: undefined, // Override if needed or rely on class
+                        confirmButtonText: 'Close'
+                    });
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Connection Error',
+                    text: 'Failed to connect to the server. Please check your internet.',
+                    ...swalGlassParams,
+                    confirmButtonText: 'Close'
+                });
+            } finally {
+                // Reset state
+                btn.disabled = false;
+                loader.style.display = 'none';
+                btnText.style.display = 'inline-block';
+            }
+        }
+
+        function showUserInfoConfirmation(userData) {
+            const fullName = `${userData.first_name || ''} ${userData.last_name || ''}`.trim() || 'No name';
+            const avatarUrl = userData.profile_picture_url || 'https://play-lh.googleusercontent.com/eRZLg00mAQGayCrFjDBklPIpW3qFHcmUs8PUQA4z7hVe-cDKMcRqecVHONAIexJGJZM';
+
+            Swal.fire({
+                title: 'User Information',
+                html: `
+                <div class="user-info-card">
+                    <div class="user-info-header">
+                        <img src="${avatarUrl}" alt="Avatar" class="user-avatar" onerror="this.src='https://play-lh.googleusercontent.com/eRZLg00mAQGayCrFjDBklPIpW3qFHcmUs8PUQA4z7hVe-cDKMcRqecVHONAIexJGJZM'">
+                        <div class="user-details">
+                            <div class="user-name">${fullName}</div>
+                            <div class="user-username">@${userData.username}</div>
+                        </div>
+                    </div>
+                    <div class="user-uid">UID: ${userData.uid}</div>
+                </div>
+                <p style="margin-top: 1rem; color: #a0a0a0; font-size: 0.9rem;">
+                    Do you want to unlock Gold for this user?
+                </p>
+            `,
+                ...swalGlassParams,
+                showCancelButton: true,
+                confirmButtonText: 'Continue',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    restorePurchase(userData.username);
+                }
+            });
+        }
+
+        async function restorePurchase(username) {
+            try {
+                // Join queue
+                const response = await fetch('/api/restore', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username: username }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    // Show queue status and start polling
+                    showQueueStatus(data.client_id, username);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.msg || "Failed to join queue",
+                        ...swalGlassParams,
+                        confirmButtonText: 'Close'
+                    });
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Connection Error',
+                    text: 'Failed to connect to the server. Please check your internet.',
+                    ...swalGlassParams,
+                    confirmButtonText: 'Close'
+                });
+            }
+        }
+
+        let pollInterval = null;
+        let countdownInterval = null;
+        let currentEstimatedTime = 0;
+
+        function showQueueStatus(clientId, username) {
+            // Show initial queue modal
+            Swal.fire({
+                title: 'Queue Status',
+                html: `
+                    <div class="queue-status-container">
+                        <div class="queue-status-text">Joining queue...</div>
+                        <div class="queue-position" id="queuePosition">-</div>
+                        <div class="queue-progress">
+                            <div class="queue-progress-bar" id="queueProgressBar" style="width: 0%"></div>
+                        </div>
+                        <div class="queue-info">
+                            <div class="queue-stat">
+                                <div class="queue-stat-label">Total Waiting</div>
+                                <div class="queue-stat-value" id="queueTotal">-</div>
+                            </div>
+                            <div class="queue-stat">
+                                <div class="queue-stat-label">Est. Time</div>
+                                <div class="queue-stat-value" id="queueTime">-</div>
+                            </div>
+                        </div>
+                        <div class="queue-status-text" id="queueStatusText">Please wait...</div>
+                    </div>
+                `,
+                ...swalGlassParams,
+                showConfirmButton: false,
+                showCancelButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+            });
+
+            // Start polling
+            pollQueueStatus(clientId, username);
+        }
+
+        async function pollQueueStatus(clientId, username) {
+            try {
+                const response = await fetch('/api/queue/status', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ client_id: clientId }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    updateQueueUI(data, username);
+
+                    // Check if completed or error
+                    if (data.status === 'completed') {
+                        clearInterval(pollInterval);
+                        clearInterval(countdownInterval);
+                        showCompletedStatus(data);
+                    } else if (data.status === 'error') {
+                        clearInterval(pollInterval);
+                        clearInterval(countdownInterval);
+                        showErrorStatus(data);
+                    } else {
+                        // Continue polling
+                        pollInterval = setTimeout(() => pollQueueStatus(clientId, username), 1000);
+                    }
+                } else {
+                    clearInterval(pollInterval);
+                    clearInterval(countdownInterval);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.msg || 'Failed to get queue status',
+                        ...swalGlassParams,
+                        confirmButtonText: 'Close'
+                    });
+                }
+            } catch (error) {
+                console.error('Polling error:', error);
+                clearInterval(pollInterval);
+                clearInterval(countdownInterval);
+                // Retry after 2 seconds
+                pollInterval = setTimeout(() => pollQueueStatus(clientId, username), 2000);
+            }
+        }
+
+        function updateQueueUI(data, username) {
+            const positionEl = document.getElementById('queuePosition');
+            const totalEl = document.getElementById('queueTotal');
+            const timeEl = document.getElementById('queueTime');
+            const statusEl = document.getElementById('queueStatusText');
+            const progressBar = document.getElementById('queueProgressBar');
+
+            if (positionEl && totalEl && timeEl && statusEl && progressBar) {
+                // Update position
+                if (data.status === 'processing') {
+                    positionEl.textContent = 'Processing';
+                    statusEl.textContent = `Processing request for ${username}...`;
+                    progressBar.style.width = '90%';
+                } else if (data.position === 0) {
+                    positionEl.textContent = 'Next';
+                    statusEl.textContent = 'You are next in queue!';
+                    progressBar.style.width = '80%';
+                } else {
+                    positionEl.textContent = `#${data.position}`;
+                    statusEl.textContent = `Position ${data.position} of ${data.total_queue}`;
+
+                    // Calculate progress (inverse of position)
+                    const progress = data.total_queue > 0 ?
+                        Math.max(10, (1 - (data.position / (data.total_queue + 1))) * 70) : 10;
+                    progressBar.style.width = `${progress}%`;
+                }
+
+                // Update total
+                totalEl.textContent = data.total_queue;
+
+                // Update time and start countdown
+                currentEstimatedTime = data.estimated_time;
+                updateTimeDisplay();
+
+                // Clear existing countdown and start new one
+                clearInterval(countdownInterval);
+                if (currentEstimatedTime > 0) {
+                    countdownInterval = setInterval(() => {
+                        if (currentEstimatedTime > 0) {
+                            currentEstimatedTime--;
+                            updateTimeDisplay();
+                        }
+                    }, 1000);
+                }
+            }
+        }
+
+        function updateTimeDisplay() {
+            const timeEl = document.getElementById('queueTime');
+            if (timeEl) {
+                if (currentEstimatedTime === 0) {
+                    timeEl.textContent = 'Soon';
+                } else if (currentEstimatedTime < 60) {
+                    timeEl.textContent = `${currentEstimatedTime}s`;
+                } else {
+                    const minutes = Math.floor(currentEstimatedTime / 60);
+                    const seconds = currentEstimatedTime % 60;
+                    timeEl.textContent = `${minutes}m ${seconds}s`;
+                }
+            }
+        }
+
+        function showCompletedStatus(data) {
+            if (data.result && data.result.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: data.result.msg,
+                    ...swalGlassParams,
+                    confirmButtonText: 'Cool!'
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed',
+                    text: 'Request completed but failed',
+                    ...swalGlassParams,
+                    confirmButtonText: 'Close'
+                });
+            }
+        }
+
+        function showErrorStatus(data) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: data.error || 'An error occurred while processing your request',
+                ...swalGlassParams,
+                confirmButtonText: 'Close'
+            });
+        }
+
+        // Allow pressing Enter to submit
+        document.getElementById("username").addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("submitBtn").click();
+            }
+        });
+    </script>
+
+</body>
+
+</html>
