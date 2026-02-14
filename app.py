@@ -272,19 +272,25 @@ def refresh_api_token():
 @app.route("/")
 def index():
     return render_template("index.html")
-
-
-@app.route("/api/get-user-info", methods=["POST"])
+    @app.route("/api/get-user-info", methods=["POST"])
 def get_user_info():
-    global api # Thêm dòng này để cập nhật biến toàn cục
     if not api:
-        # Thử khởi tạo lại nếu api đang None
-        try:
-            token = auth.get_token()
-            api = LocketAPI(token)
-        except:
-            return jsonify({"success": False, "msg": "API vẫn chưa thể khởi tạo. Kiểm tra thông tin đăng nhập."}), 500
+        return jsonify({"success": False, "msg": "API not initialized. Check server logs."}), 500
 
+    data = request.json
+    username = data.get("username")
+
+    if not username:
+        return jsonify({"success": False, "msg": "Username is required"}), 400
+
+    try:  # <--- Đảm bảo dòng này thụt lề đúng 4 dấu cách (hoặc 1 tab)
+        # Các dòng tiếp theo bên trong try phải thụt vào thêm 1 cấp nữa
+        print(f"Looking up user: {username}")
+        # ... code tiếp theo ...
+    except Exception as e:
+        # Dòng except này phải thẳng hàng với dòng try phía trên
+        print(f"Error in get user info: {e}")
+        return jsonify({"success": False, "msg": f"An error occurred: {str(e)}"}), 500
 
     try:
         # User lookup
