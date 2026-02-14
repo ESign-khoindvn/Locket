@@ -170,13 +170,18 @@ class QueueManager:
                 with self.lock:
                     self.current_processing = None
 
-    def _process_request(self, client_id):
-        """Process a single restore purchase request"""
-        try:
-            with self.lock:
+def _process_request(self, client_id):
+    """Process a single restore purchase request"""
+    username = "Unknown"  # Khởi tạo giá trị mặc định để tránh lỗi 'not defined'
+    try:
+        with self.lock:
+            if client_id in self.client_requests:
                 username = self.client_requests[client_id]["username"]
+            else:
+                raise Exception("Client ID không tồn tại trong danh sách yêu cầu")
 
-            print(f"Processing restore for: {username}")
+        print(f"Đang xử lý khôi phục cho: {username}")
+        # ... giữ nguyên phần còn lại của code xử lý API ...
 
             # User lookup
             try:
